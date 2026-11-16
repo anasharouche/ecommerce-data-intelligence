@@ -1,0 +1,30 @@
+model Model
+	culture: fr-FR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["analytics vw_global_kpis","analytics vw_seller_performance","analytics vw_monthly_sales","analytics vw_delivery_satisfaction","analytics vw_delivery_performance","analytics vw_category_sales","analytics vw_customer_satisfaction","_Measures"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'analytics vw_global_kpis'
+ref table 'analytics vw_seller_performance'
+ref table 'analytics vw_monthly_sales'
+ref table DateTableTemplate_420044bf-5f68-4465-8a05-16c864075086
+ref table LocalDateTable_7fbf2ca8-4635-4daf-9147-49c2e081cc99
+ref table 'analytics vw_delivery_satisfaction'
+ref table 'analytics vw_delivery_performance'
+ref table LocalDateTable_dd81adc5-3ad8-496f-899f-d1f6be236ee9
+ref table 'analytics vw_category_sales'
+ref table 'analytics vw_customer_satisfaction'
+ref table LocalDateTable_3013fcaa-ad43-4d7b-862b-8c2814ada26a
+ref table _Measures
+
+ref cultureInfo fr-FR
+

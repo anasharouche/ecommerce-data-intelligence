@@ -1,0 +1,149 @@
+table 'analytics vw_global_kpis'
+	lineageTag: 8d5156d3-accb-4571-860b-a5ee4d510995
+
+	column total_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 54c65486-6be2-4913-97a1-9b26700dd1a8
+		summarizeBy: sum
+		sourceColumn: total_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivered_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 23b52a1c-0038-4315-ad78-dacc6206a4ca
+		summarizeBy: sum
+		sourceColumn: delivered_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column orders_with_items
+		dataType: int64
+		formatString: 0
+		lineageTag: edd6bb80-80b4-4420-94a0-447bb6ba6407
+		summarizeBy: sum
+		sourceColumn: orders_with_items
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_sales
+		dataType: double
+		lineageTag: 4706abb1-84d9-4af2-a5e8-67024c859e28
+		summarizeBy: sum
+		sourceColumn: total_sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_product_revenue
+		dataType: double
+		lineageTag: 14c68f7a-ba00-422e-bcb6-ca7f2e564144
+		summarizeBy: sum
+		sourceColumn: total_product_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_freight
+		dataType: double
+		lineageTag: 95f2ec7a-6ec7-4bb8-b177-8d9899d137b7
+		summarizeBy: sum
+		sourceColumn: total_freight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_order_value
+		dataType: double
+		lineageTag: 8c5c5c56-cc5a-41ea-af48-14261b5769b1
+		summarizeBy: sum
+		sourceColumn: avg_order_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_payments
+		dataType: double
+		lineageTag: 527df815-5bf5-4e00-9abd-2ba251dbe821
+		summarizeBy: sum
+		sourceColumn: total_payments
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column delayed_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 10c8c6fb-fdcc-4f90-a868-c00079b82af5
+		summarizeBy: sum
+		sourceColumn: delayed_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column delay_rate
+		dataType: double
+		lineageTag: 264733f3-fd3e-42c6-8605-bee9dcb52576
+		summarizeBy: sum
+		sourceColumn: delay_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_delivery_days
+		dataType: double
+		lineageTag: fff6c6ce-b035-414f-a30a-3f5052029ef1
+		summarizeBy: sum
+		sourceColumn: avg_delivery_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_reviews
+		dataType: int64
+		formatString: 0
+		lineageTag: d2684a62-9092-4373-a422-0789b6f8b3bf
+		summarizeBy: sum
+		sourceColumn: total_reviews
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_review_score
+		dataType: double
+		lineageTag: 9756c9f3-8797-4a67-9445-af03199feebc
+		summarizeBy: sum
+		sourceColumn: avg_review_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column satisfaction_rate
+		dataType: double
+		lineageTag: 352f3bc8-1b14-4378-bce3-471c7b90a882
+		summarizeBy: sum
+		sourceColumn: satisfaction_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'analytics vw_global_kpis' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost:5432", "ecommerce_dw"),
+				    analytics_vw_global_kpis = Source{[Schema="analytics",Item="vw_global_kpis"]}[Data]
+				in
+				    analytics_vw_global_kpis
+
+	annotation PBI_ResultType = Table
+

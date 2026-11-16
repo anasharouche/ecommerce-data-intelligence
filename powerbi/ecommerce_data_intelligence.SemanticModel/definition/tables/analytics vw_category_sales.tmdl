@@ -1,0 +1,108 @@
+table 'analytics vw_category_sales'
+	lineageTag: 37452e88-a931-4248-8919-5fbb19ae5d58
+
+	column category_name
+		dataType: string
+		lineageTag: 35e5b1e3-7fec-44dc-95c1-0a984605ecc9
+		summarizeBy: none
+		sourceColumn: category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column items_sold
+		dataType: int64
+		formatString: 0
+		lineageTag: 982784f4-ef14-47f0-afcb-ba5c6c62cca4
+		summarizeBy: sum
+		sourceColumn: items_sold
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 8621b331-9021-4cfe-8843-6f7e7518fe91
+		summarizeBy: sum
+		sourceColumn: total_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column distinct_products
+		dataType: int64
+		formatString: 0
+		lineageTag: b687880e-33b3-4f6c-b025-259b08422c5a
+		summarizeBy: sum
+		sourceColumn: distinct_products
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_revenue
+		dataType: double
+		lineageTag: 55249765-be86-47fe-8f2c-23279d8c78e0
+		summarizeBy: sum
+		sourceColumn: product_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column freight_revenue
+		dataType: double
+		lineageTag: ee9edab8-8ab0-4e4e-aff1-c2574b3304dd
+		summarizeBy: sum
+		sourceColumn: freight_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_sales
+		dataType: double
+		lineageTag: f5452a10-a5d4-41f0-983e-7e3d7724808a
+		summarizeBy: sum
+		sourceColumn: total_sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_item_price
+		dataType: double
+		lineageTag: 51339fd5-1f61-4d84-a859-089ff43e69ef
+		summarizeBy: sum
+		sourceColumn: avg_item_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sales_share_pct
+		dataType: double
+		lineageTag: 2327c456-dce3-4c54-89a5-9e9c3a29bc5d
+		summarizeBy: sum
+		sourceColumn: sales_share_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sales_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 30b56682-93dc-4760-ac8d-9588d29ca731
+		summarizeBy: sum
+		sourceColumn: sales_rank
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'analytics vw_category_sales' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost:5432", "ecommerce_dw"),
+				    analytics_vw_category_sales = Source{[Schema="analytics",Item="vw_category_sales"]}[Data]
+				in
+				    analytics_vw_category_sales
+
+	annotation PBI_ResultType = Table
+

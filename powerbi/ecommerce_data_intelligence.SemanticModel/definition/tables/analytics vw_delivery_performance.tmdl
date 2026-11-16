@@ -1,0 +1,124 @@
+table 'analytics vw_delivery_performance'
+	lineageTag: b4502f85-c12f-4065-95a1-6ad5b168429b
+
+	column purchase_month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7fda16f3-0417-4629-a717-775a4e325110
+		summarizeBy: none
+		sourceColumn: purchase_month
+
+		variation Variation
+			isDefault
+			relationship: 0647708b-c690-490b-8711-bc486ba96737
+			defaultHierarchy: LocalDateTable_dd81adc5-3ad8-496f-899f-d1f6be236ee9.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column total_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 863a746a-a8c9-4e27-a6c3-2b88d39dfe34
+		summarizeBy: sum
+		sourceColumn: total_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivered_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e7fab11-14ef-4dea-bbcc-45fba60a544b
+		summarizeBy: sum
+		sourceColumn: delivered_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column evaluated_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: b9957236-ada0-4931-9f75-5503428236e8
+		summarizeBy: sum
+		sourceColumn: evaluated_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column delayed_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: a5e495c3-5475-44e0-a4be-a60f4f3aab68
+		summarizeBy: sum
+		sourceColumn: delayed_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column on_time_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 16c7cc0e-9f75-429c-b4d6-95842fc70f00
+		summarizeBy: sum
+		sourceColumn: on_time_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column unknown_delivery_status
+		dataType: int64
+		formatString: 0
+		lineageTag: 87c262b0-2edf-42dd-be78-38789dff836c
+		summarizeBy: sum
+		sourceColumn: unknown_delivery_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column delay_rate
+		dataType: double
+		lineageTag: b7dcff14-d6b9-49b6-95f8-79bc8f6089fd
+		summarizeBy: sum
+		sourceColumn: delay_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column on_time_rate
+		dataType: double
+		lineageTag: 91849b30-c5c8-46f0-bd82-14210bc38c42
+		summarizeBy: sum
+		sourceColumn: on_time_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_delivery_days
+		dataType: double
+		lineageTag: 1caeddf3-f3a9-424b-9c8b-20718d30aa06
+		summarizeBy: sum
+		sourceColumn: avg_delivery_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_delivery_delay_days
+		dataType: double
+		lineageTag: 9e423ab2-04e4-482c-a6e4-c193ab8d160c
+		summarizeBy: sum
+		sourceColumn: avg_delivery_delay_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'analytics vw_delivery_performance' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost:5432", "ecommerce_dw"),
+				    analytics_vw_delivery_performance = Source{[Schema="analytics",Item="vw_delivery_performance"]}[Data]
+				in
+				    analytics_vw_delivery_performance
+
+	annotation PBI_ResultType = Table
+

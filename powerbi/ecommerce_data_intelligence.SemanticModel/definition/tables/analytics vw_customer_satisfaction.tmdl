@@ -1,0 +1,152 @@
+table 'analytics vw_customer_satisfaction'
+	lineageTag: 6397b1b7-de0e-4184-bb07-72ec7ed3d094
+
+	column review_month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7421c09d-f0e9-4b00-9242-a61c5e5093d2
+		summarizeBy: none
+		sourceColumn: review_month
+
+		variation Variation
+			isDefault
+			relationship: 455b64c9-3867-4d8e-8d0c-d901edff20cc
+			defaultHierarchy: LocalDateTable_3013fcaa-ad43-4d7b-862b-8c2814ada26a.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column total_reviews
+		dataType: int64
+		formatString: 0
+		lineageTag: cc539631-ebf0-405e-8b44-398a5f02e54b
+		summarizeBy: sum
+		sourceColumn: total_reviews
+
+		annotation SummarizationSetBy = Automatic
+
+	column reviewed_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: f8405107-4212-4000-96fe-5cad804a8b2c
+		summarizeBy: sum
+		sourceColumn: reviewed_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column positive_reviews
+		dataType: int64
+		formatString: 0
+		lineageTag: 3285fbe1-292f-49ad-bdd5-8a5321053a81
+		summarizeBy: sum
+		sourceColumn: positive_reviews
+
+		annotation SummarizationSetBy = Automatic
+
+	column negative_reviews
+		dataType: int64
+		formatString: 0
+		lineageTag: 4d777ca9-6d52-457d-a618-530387199146
+		summarizeBy: sum
+		sourceColumn: negative_reviews
+
+		annotation SummarizationSetBy = Automatic
+
+	column neutral_reviews
+		dataType: int64
+		formatString: 0
+		lineageTag: cfd9ce22-1cd4-43ee-82c4-29f0ced95920
+		summarizeBy: sum
+		sourceColumn: neutral_reviews
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_review_score
+		dataType: double
+		lineageTag: ecc57a4d-4c83-4852-8bb1-47f495b9f4a6
+		summarizeBy: sum
+		sourceColumn: avg_review_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_response_days
+		dataType: double
+		lineageTag: 27a27685-9d51-4d5e-8c18-5714d435a8af
+		summarizeBy: sum
+		sourceColumn: avg_response_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column reviews_with_message
+		dataType: int64
+		formatString: 0
+		lineageTag: 20a063ae-97df-4c0c-b514-cb6c8e1f4079
+		summarizeBy: sum
+		sourceColumn: reviews_with_message
+
+		annotation SummarizationSetBy = Automatic
+
+	column reviews_for_delayed_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 8234adcc-2304-4078-8041-363ce70df707
+		summarizeBy: sum
+		sourceColumn: reviews_for_delayed_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column reviews_for_on_time_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 420aa34b-e636-4532-bb5d-9e40311391a1
+		summarizeBy: sum
+		sourceColumn: reviews_for_on_time_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column satisfaction_rate
+		dataType: double
+		lineageTag: 165cab8f-e2f2-4a1f-a36c-82b5b885b361
+		summarizeBy: sum
+		sourceColumn: satisfaction_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dissatisfaction_rate
+		dataType: double
+		lineageTag: 074240c8-6b2f-4de0-b5d7-1b34e5ed2f5d
+		summarizeBy: sum
+		sourceColumn: dissatisfaction_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column message_rate
+		dataType: double
+		lineageTag: b0dccc6b-0c37-4f11-85b7-8b9bb64f09cb
+		summarizeBy: sum
+		sourceColumn: message_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'analytics vw_customer_satisfaction' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost:5432", "ecommerce_dw"),
+				    analytics_vw_customer_satisfaction = Source{[Schema="analytics",Item="vw_customer_satisfaction"]}[Data]
+				in
+				    analytics_vw_customer_satisfaction
+
+	annotation PBI_ResultType = Table
+

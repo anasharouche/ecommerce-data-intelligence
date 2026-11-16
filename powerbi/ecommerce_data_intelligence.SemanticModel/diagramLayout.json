@@ -1,0 +1,126 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "analytics vw_global_kpis",
+          "nodeLineageTag": "8d5156d3-accb-4571-860b-a5ee4d510995",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 334
+          },
+          "nodeIndex": "analytics vw_category_sales",
+          "nodeLineageTag": "37452e88-a931-4248-8919-5fbb19ae5d58",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 873,
+            "y": 0
+          },
+          "nodeIndex": "analytics vw_customer_satisfaction",
+          "nodeLineageTag": "6397b1b7-de0e-4184-bb07-72ec7ed3d094",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 568,
+            "y": 0
+          },
+          "nodeIndex": "analytics vw_delivery_performance",
+          "nodeLineageTag": "b4502f85-c12f-4065-95a1-6ad5b168429b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 699,
+            "y": 346
+          },
+          "nodeIndex": "analytics vw_delivery_satisfaction",
+          "nodeLineageTag": "45a36f08-5402-4952-9c41-3448cb74cbca",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 266,
+            "y": 0
+          },
+          "nodeIndex": "analytics vw_monthly_sales",
+          "nodeLineageTag": "ad6570ec-0fbc-4e62-8044-10ff99721bf2",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 277,
+            "y": 337
+          },
+          "nodeIndex": "analytics vw_seller_performance",
+          "nodeLineageTag": "69e757f9-f31d-4076-91e3-bae6de7f11d0",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1157,
+            "y": 266.5
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "cac24bf2-1bc3-4b68-b329-8d46d5dce716",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Toutes les tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Toutes les tables",
+  "defaultDiagram": "Toutes les tables"
+}

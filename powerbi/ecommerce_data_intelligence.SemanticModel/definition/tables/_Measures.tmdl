@@ -1,0 +1,30 @@
+table _Measures
+	lineageTag: cac24bf2-1bc3-4b68-b329-8d46d5dce716
+
+	measure 'Total Sales' = SUM('analytics vw_monthly_sales'[total_sales])
+		lineageTag: 1be5974b-58af-4dbc-8992-fcb79fc55463
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Placeholder
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d78a3f2-3620-4c28-9ee6-5c3cc1a117b3
+		summarizeBy: sum
+		sourceColumn: Placeholder
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlSKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Placeholder = _t]),
+				    #"Type modifié" = Table.TransformColumnTypes(Source,{{"Placeholder", Int64.Type}})
+				in
+				    #"Type modifié"
+
+	annotation PBI_ResultType = Table
+

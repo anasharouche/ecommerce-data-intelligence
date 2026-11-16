@@ -1,0 +1,88 @@
+table 'analytics vw_delivery_satisfaction'
+	lineageTag: 45a36f08-5402-4952-9c41-3448cb74cbca
+
+	column delivery_status
+		dataType: string
+		lineageTag: 993d3c73-c92b-4c8d-9a50-3164983eed4e
+		summarizeBy: none
+		sourceColumn: delivery_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_reviews
+		dataType: int64
+		formatString: 0
+		lineageTag: 034c7f30-d9df-4d48-b38c-05a20f4ec96e
+		summarizeBy: sum
+		sourceColumn: total_reviews
+
+		annotation SummarizationSetBy = Automatic
+
+	column reviewed_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 35cf2b7f-d447-471b-9dd0-554d6333cc4a
+		summarizeBy: sum
+		sourceColumn: reviewed_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_review_score
+		dataType: double
+		lineageTag: 6a5a9451-7cf5-441e-a28b-0effb5d444df
+		summarizeBy: sum
+		sourceColumn: avg_review_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column positive_reviews
+		dataType: int64
+		formatString: 0
+		lineageTag: b78dc84a-bdd6-4bdf-a06d-b244cec17986
+		summarizeBy: sum
+		sourceColumn: positive_reviews
+
+		annotation SummarizationSetBy = Automatic
+
+	column negative_reviews
+		dataType: int64
+		formatString: 0
+		lineageTag: 95cab85d-a9c6-4c8c-af18-940200fe77a2
+		summarizeBy: sum
+		sourceColumn: negative_reviews
+
+		annotation SummarizationSetBy = Automatic
+
+	column satisfaction_rate
+		dataType: double
+		lineageTag: fd56ebde-3c33-4e81-9fa9-dd97da346b03
+		summarizeBy: sum
+		sourceColumn: satisfaction_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dissatisfaction_rate
+		dataType: double
+		lineageTag: 15b83c79-30d0-4ab0-becd-d9259a5e7e02
+		summarizeBy: sum
+		sourceColumn: dissatisfaction_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'analytics vw_delivery_satisfaction' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost:5432", "ecommerce_dw"),
+				    analytics_vw_delivery_satisfaction = Source{[Schema="analytics",Item="vw_delivery_satisfaction"]}[Data]
+				in
+				    analytics_vw_delivery_satisfaction
+
+	annotation PBI_ResultType = Table
+

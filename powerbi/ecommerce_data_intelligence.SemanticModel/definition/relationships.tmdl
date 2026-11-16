@@ -1,0 +1,15 @@
+relationship 2cfb7b16-471e-495b-98d7-4aef5f98cb36
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'analytics vw_monthly_sales'.sales_month
+	toColumn: LocalDateTable_7fbf2ca8-4635-4daf-9147-49c2e081cc99.Date
+
+relationship 0647708b-c690-490b-8711-bc486ba96737
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'analytics vw_delivery_performance'.purchase_month
+	toColumn: LocalDateTable_dd81adc5-3ad8-496f-899f-d1f6be236ee9.Date
+
+relationship 455b64c9-3867-4d8e-8d0c-d901edff20cc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'analytics vw_customer_satisfaction'.review_month
+	toColumn: LocalDateTable_3013fcaa-ad43-4d7b-862b-8c2814ada26a.Date
+

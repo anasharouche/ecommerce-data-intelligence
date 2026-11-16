@@ -14,6 +14,7 @@ env/
 # Environment variables and secrets
 .env
 .env.*
+*.env
 !.env.example
 
 # Data files
@@ -31,3 +32,12 @@ data/processed/
 # OS
 .DS_Store
 Thumbs.db
+
+# Power BI local state and cache
+**/.pbi/
+**/*.abf
+
+# Power BI local binary artifacts and backups
+**/*.pbix
+**/*.pbit
+**/*.pbix.bak

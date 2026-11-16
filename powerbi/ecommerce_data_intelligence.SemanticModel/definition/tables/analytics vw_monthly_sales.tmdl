@@ -1,0 +1,107 @@
+table 'analytics vw_monthly_sales'
+	lineageTag: ad6570ec-0fbc-4e62-8044-10ff99721bf2
+
+	column sales_month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f4ff9be6-22b3-4003-bf05-71fd141a5916
+		summarizeBy: none
+		sourceColumn: sales_month
+
+		variation Variation
+			isDefault
+			relationship: 2cfb7b16-471e-495b-98d7-4aef5f98cb36
+			defaultHierarchy: LocalDateTable_7fbf2ca8-4635-4daf-9147-49c2e081cc99.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column total_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b731820-e78e-4aee-b820-63d4e8e4a53a
+		summarizeBy: sum
+		sourceColumn: total_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivered_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b087b42-4d9f-4053-a416-d45faad4fc70
+		summarizeBy: sum
+		sourceColumn: delivered_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column orders_with_items
+		dataType: int64
+		formatString: 0
+		lineageTag: ddae2024-73d2-49c5-a13f-88bc5a7896b4
+		summarizeBy: sum
+		sourceColumn: orders_with_items
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_revenue
+		dataType: double
+		lineageTag: fe3907b5-2763-4a03-a524-76b3e445841f
+		summarizeBy: sum
+		sourceColumn: product_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column freight_revenue
+		dataType: double
+		lineageTag: fce28361-b07f-4c6c-b199-460b86c306ae
+		summarizeBy: sum
+		sourceColumn: freight_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_sales
+		dataType: double
+		lineageTag: 071f9927-61e9-4df2-bc22-f5e9fc8d33d7
+		summarizeBy: sum
+		sourceColumn: total_sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_order_value
+		dataType: double
+		lineageTag: d93b73f5-7052-4251-b9ad-cfd9d7e358e9
+		summarizeBy: sum
+		sourceColumn: avg_order_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sales_growth_pct
+		dataType: double
+		lineageTag: f32de178-4651-4ac5-b889-862cce3c2f2f
+		summarizeBy: sum
+		sourceColumn: sales_growth_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'analytics vw_monthly_sales' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost:5432", "ecommerce_dw"),
+				    analytics_vw_monthly_sales = Source{[Schema="analytics",Item="vw_monthly_sales"]}[Data]
+				in
+				    analytics_vw_monthly_sales
+
+	annotation PBI_ResultType = Table
+
