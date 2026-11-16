@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "a5c06b9d2e5c48170a39",
+  "position": { "x": 665, "y": 150, "z": 4, "height": 150, "width": 590, "tabOrder": 4 },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": { "queryState": { "Data": { "projections": [{ "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "_Measures" } }, "Property": "Total Orders" } }, "queryRef": "_Measures.Total Orders", "nativeQueryRef": "Total Orders" }] } } },
+    "objects": { "value": [{ "properties": { "fontSize": { "expr": { "Literal": { "Value": "26D" } } }, "fontColor": { "solid": { "color": { "expr": { "Literal": { "Value": "'#12239E'" } } } } } }, "selector": { "id": "default" } }], "label": [{ "properties": { "fontSize": { "expr": { "Literal": { "Value": "11D" } } }, "fontColor": { "solid": { "color": { "expr": { "Literal": { "Value": "'#616161'" } } } } } }, "selector": { "id": "default" } }] },
+    "drillFilterOtherVisuals": true
+  }
+}

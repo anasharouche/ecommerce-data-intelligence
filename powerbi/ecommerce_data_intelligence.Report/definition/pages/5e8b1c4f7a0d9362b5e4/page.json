@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "5e8b1c4f7a0d9362b5e4",
+  "displayName": "Sales & Product Analytics",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "visualInteractions": [
+    { "source": "729d3e6a9b2f1584d706", "target": "e904afd16c90725b4e7d", "type": "NoFilter" },
+    { "source": "729d3e6a9b2f1584d706", "target": "fa15b0e27da1836c5f8e", "type": "NoFilter" },
+    { "source": "729d3e6a9b2f1584d706", "target": "0b26c1f38eb2947d609f", "type": "NoFilter" }
+  ]
+}

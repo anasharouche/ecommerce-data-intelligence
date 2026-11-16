@@ -2,11 +2,27 @@ table _Measures
 	lineageTag: cac24bf2-1bc3-4b68-b329-8d46d5dce716
 
 	measure 'Total Sales' = SUM('analytics vw_monthly_sales'[total_sales])
+		formatString: R$ #,##0.00
 		lineageTag: 1be5974b-58af-4dbc-8992-fcb79fc55463
 
 		changedProperty = IsHidden
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Orders' = SUM('analytics vw_monthly_sales'[total_orders])
+		formatString: #,##0
+
+	measure 'Average Order Value' = DIVIDE([Total Sales], SUM('analytics vw_monthly_sales'[orders_with_items]))
+		formatString: R$ #,##0.00
+
+	measure 'Delay Rate' = DIVIDE(SUM('analytics vw_delivery_performance'[delayed_orders]), SUM('analytics vw_delivery_performance'[evaluated_orders]))
+		formatString: 0.00%
+
+	measure 'On-Time Delivery Rate' = DIVIDE(SUM('analytics vw_delivery_performance'[on_time_orders]), SUM('analytics vw_delivery_performance'[evaluated_orders]))
+		formatString: 0.00%
+
+	measure 'Customer Satisfaction Rate' = DIVIDE(SUM('analytics vw_customer_satisfaction'[positive_reviews]), SUM('analytics vw_customer_satisfaction'[total_reviews]))
+		formatString: 0.00%
 
 	column Placeholder
 		dataType: int64

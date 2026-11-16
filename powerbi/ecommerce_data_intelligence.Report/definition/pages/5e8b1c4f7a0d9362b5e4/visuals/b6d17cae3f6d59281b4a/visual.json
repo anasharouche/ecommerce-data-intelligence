@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "b6d17cae3f6d59281b4a",
+  "position": { "x": 1290, "y": 150, "z": 5, "height": 150, "width": 590, "tabOrder": 5 },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": { "queryState": { "Data": { "projections": [{ "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "_Measures" } }, "Property": "Average Order Value" } }, "queryRef": "_Measures.Average Order Value", "nativeQueryRef": "Average Order Value" }] } } },
+    "objects": { "value": [{ "properties": { "fontSize": { "expr": { "Literal": { "Value": "26D" } } }, "fontColor": { "solid": { "color": { "expr": { "Literal": { "Value": "'#00A6A6'" } } } } } }, "selector": { "id": "default" } }], "label": [{ "properties": { "fontSize": { "expr": { "Literal": { "Value": "11D" } } }, "fontColor": { "solid": { "color": { "expr": { "Literal": { "Value": "'#616161'" } } } } } }, "selector": { "id": "default" } }] },
+    "drillFilterOtherVisuals": true
+  }
+}

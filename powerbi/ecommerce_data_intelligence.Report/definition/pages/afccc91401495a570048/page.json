@@ -1,8 +1,40 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "afccc91401495a570048",
-  "displayName": "Page 1",
+  "displayName": "Executive Overview",
   "displayOption": "FitToPage",
   "height": 1080,
-  "width": 1920
+  "width": 1920,
+  "visualInteractions": [
+    {
+      "source": "e2b5a8c1d4f7503692be",
+      "target": "226d6f4b61d067455796",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e2b5a8c1d4f7503692be",
+      "target": "71ec56fbb90857d21a3c",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e2b5a8c1d4f7503692be",
+      "target": "71cf6745500ca40e8372",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e2b5a8c1d4f7503692be",
+      "target": "b5e8d1f4a7c0836925e1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e2b5a8c1d4f7503692be",
+      "target": "c6f9e2a5b8d1947036f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e2b5a8c1d4f7503692be",
+      "target": "d7a0f3b6c9e2058147a3",
+      "type": "NoFilter"
+    }
+  ]
 }
