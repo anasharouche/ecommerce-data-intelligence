@@ -182,6 +182,69 @@ cultureInfo fr-FR
 			          }
 			        }
 			      ]
+			    },
+			    "analytics_vw_delivery_performance.purchase_month": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "analytics vw_delivery_performance",
+			          "ConceptualProperty": "purchase_month"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Purchase Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "analytics_vw_customer_satisfaction.review_month": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "analytics vw_customer_satisfaction",
+			          "ConceptualProperty": "review_month"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Review Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "analytics_vw_delivery_satisfaction.delivery_status": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "analytics vw_delivery_satisfaction",
+			          "ConceptualProperty": "delivery_status"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Delivery Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
 			    }
 			  }
 			}
