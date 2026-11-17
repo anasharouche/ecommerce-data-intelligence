@@ -1,204 +1,253 @@
-# Phase 1 — Exploration et compréhension des données
+# Phase 1 — Data Exploration & Data Quality
 
-## 1. Présentation du projet
+> **Statut : Phase 1 terminée.**
+> Cette phase explore les données brutes Olist et établit les règles de qualité nécessaires aux traitements ultérieurs. Elle identifie les anomalies sans modifier les fichiers sources.
 
-**Nom du projet :** E-Commerce Data Intelligence Platform
+## Table des matières
 
-L'objectif de ce projet est de concevoir une plateforme Data Engineering et Machine Learning permettant d'analyser les performances d'une activité e-commerce et de prédire les retards de livraison.
+1. [Présentation et objectifs](#section-1)
+2. [Contexte technique et source des données](#section-2)
+3. [Démarche d'exploration](#section-3)
+4. [Inventaire du dataset](#section-4)
+5. [Structure, clés et relations](#section-5)
+6. [Valeurs manquantes](#section-6)
+7. [Doublons et multiplicité des avis](#section-7)
+8. [Commandes et cohérence temporelle](#section-8)
+9. [Synthèse des anomalies et décisions](#section-9)
+10. [Validations et limites](#section-10)
+11. [Livrables](#section-11)
+12. [Conclusion et transition](#section-12)
 
-Le projet s'appuie sur le dataset public **Brazilian E-Commerce Public Dataset by Olist**, disponible sur Kaggle.
+<a id="section-1"></a>
 
-Dataset : https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
+## 1. Présentation et objectifs
 
-Cette première phase consiste à explorer les données, comprendre leur structure, identifier les relations entre les tables et détecter les éventuelles anomalies avant de construire le pipeline ETL.
+L'**E-Commerce Data Intelligence Platform** s'appuie sur le dataset public **Brazilian E-Commerce Public Dataset by Olist**. L'objectif global est de construire une plateforme de Data Engineering et d'analyse capable de suivre les performances e-commerce, puis de préparer un cas d'usage de Machine Learning consacré à la prédiction des retards de livraison.
 
-## 2. Environnement technique
+La Phase 1 précède toute transformation. Elle vise à :
 
-| Composant | Technologie |
+- comprendre la structure des neuf fichiers CSV ;
+- mesurer leurs dimensions et examiner leurs types ;
+- identifier les clés candidates et les relations ;
+- analyser les valeurs manquantes et les doublons ;
+- repérer les anomalies métier et temporelles ;
+- définir les précautions nécessaires au futur ETL et au modèle prédictif.
+
+La distinction est essentielle : **explorer n'est pas nettoyer**. Les constats de cette phase décrivent les données brutes ; les corrections, enrichissements et indicateurs de qualité sont implémentés à partir de la [Phase 2](PHASE_2_DATA_CLEANING_ETL.md).
+
+<a id="section-2"></a>
+
+## 2. Contexte technique et source des données
+
+| Élément | Référence |
 |---|---|
-| Système d'exploitation | Windows 11 |
-| Éditeur de code | Visual Studio Code |
-| Langage | Python 3.12.10 |
-| Environnement virtuel | venv |
-| Manipulation des données | Pandas |
-| Calcul numérique | NumPy |
+| Dataset | [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) |
+| Environnement documenté | Windows 11, Python 3.12.10, environnement virtuel `venv` |
+| Analyse tabulaire | Pandas, NumPy |
 | Visualisation | Matplotlib, Seaborn |
-| Format de stockage | CSV, Parquet (prévu) |
-| Notebook | Jupyter |
+| Support d'exploration | Jupyter Notebook |
+| Données sources | CSV dans `data/raw/olist/` |
 
-Les bibliothèques principales ont été installées et testées avec succès.
+Le notebook principal est [`01_olist_data_exploration.ipynb`](../notebooks/01_olist_data_exploration.ipynb). Le script [`inspect_dataset.py`](../src/inspect_dataset.py) fournit en complément une inspection reproductible des fichiers attendus, de leurs colonnes, types, valeurs manquantes et doublons complets.
 
-## 3. Présentation du dataset
+Les CSV originaux sont considérés comme immuables. Ils sont exclus du versionnement Git et ne sont pas réécrits pendant l'exploration.
 
-Le dataset Olist contient neuf fichiers CSV représentant différentes entités du système e-commerce.
+<a id="section-3"></a>
 
-| Fichier | Nombre de lignes | Nombre de colonnes | Description |
-|---|---:|---:|---|
-| orders | 99 441 | 8 | Informations sur les commandes |
-| customers | 99 441 | 5 | Informations sur les clients |
-| order_items | 112 650 | 7 | Articles associés aux commandes |
-| products | 32 951 | 9 | Informations sur les produits |
-| sellers | 3 095 | 4 | Informations sur les vendeurs |
-| order_payments | 103 886 | 5 | Informations sur les paiements |
-| order_reviews | 99 224 | 7 | Avis et évaluations des clients |
-| geolocation | 1 000 163 | 5 | Informations géographiques |
-| category_translation | 71 | 2 | Traduction des catégories de produits |
+## 3. Démarche d'exploration
 
-**Volume total : 1 560 862 lignes.**
+```mermaid
+flowchart LR
+    A["9 fichiers CSV Olist"] --> B["Chargement Pandas"]
+    B --> C["Dimensions et types"]
+    C --> D["Valeurs manquantes"]
+    D --> E["Clés et doublons"]
+    E --> F["Intégrité référentielle"]
+    F --> G["Anomalies métier et temporelles"]
+    G --> H["Règles pour l'ETL et le ML"]
+```
 
-## 4. Analyse de la structure et des clés
+Le notebook charge explicitement les neuf fichiers, puis exécute des contrôles ciblés. Les résultats enregistrés dans ses sorties constituent la trace principale de cette phase. Les audits Python de la Phase 2 approfondissent ensuite certains domaines, sans changer les constats bruts présentés ici.
 
-Une première inspection a permis d'examiner les dimensions, les types de données, les valeurs manquantes et les doublons de chaque fichier.
+<a id="section-4"></a>
 
-### 4.1 Clés candidates identifiées
+## 4. Inventaire du dataset
 
-Les contrôles réalisés ont donné les résultats suivants :
+| Jeu de données | Fichier source | Lignes | Colonnes | Rôle |
+|---|---|---:|---:|---|
+| Commandes | `olist_orders_dataset.csv` | 99 441 | 8 | Statut et cycle de vie des commandes |
+| Clients | `olist_customers_dataset.csv` | 99 441 | 5 | Identifiants et localisation des clients |
+| Articles de commande | `olist_order_items_dataset.csv` | 112 650 | 7 | Produits, vendeurs, prix et transport |
+| Produits | `olist_products_dataset.csv` | 32 951 | 9 | Caractéristiques et catégories produit |
+| Vendeurs | `olist_sellers_dataset.csv` | 3 095 | 4 | Identifiants et localisation des vendeurs |
+| Paiements | `olist_order_payments_dataset.csv` | 103 886 | 5 | Transactions et modes de paiement |
+| Avis | `olist_order_reviews_dataset.csv` | 99 224 | 7 | Notes, commentaires et dates de réponse |
+| Géolocalisation | `olist_geolocation_dataset.csv` | 1 000 163 | 5 | Coordonnées par préfixe postal |
+| Traduction des catégories | `product_category_name_translation.csv` | 71 | 2 | Traductions portugais–anglais |
+| **Total** |  | **1 560 862** |  |  |
 
-| Table | Clé candidate | Doublons détectés |
-|---|---|---:|
-| orders | order_id | 0 |
-| customers | customer_id | 0 |
-| order_items | order_id + order_item_id | 0 |
-| products | product_id | 0 |
-| sellers | seller_id | 0 |
-| order_payments | order_id + payment_sequential | 0 |
-| order_reviews | review_id + order_id | 0 |
+Les volumes ne décrivent pas tous la même granularité. Il existe davantage de lignes d'articles et de paiements que de commandes, ce qui annonce des relations un-à-plusieurs qu'il faudra préserver lors des agrégations.
 
-La colonne `review_id` seule n'est pas unique : 789 identifiants sont répétés.
+<a id="section-5"></a>
 
-La combinaison `review_id + order_id` ne présente aucun doublon et constitue une clé candidate pour cette table.
+## 5. Structure, clés et relations
 
-### 4.2 Relations entre les tables
+### 5.1 Clés candidates
 
-Des contrôles d'intégrité référentielle ont été réalisés à l'aide des identifiants distincts et de comparaisons entre tables.
-
-| Relation vérifiée | Clés non correspondantes |
-|---|---:|
-| orders.customer_id → customers.customer_id | 0 |
-| order_items.order_id → orders.order_id | 0 |
-| order_items.product_id → products.product_id | 0 |
-| order_items.seller_id → sellers.seller_id | 0 |
-| order_payments.order_id → orders.order_id | 0 |
-| order_reviews.order_id → orders.order_id | 0 |
-
-Aucune clé étrangère orpheline n'a été détectée dans les relations testées.
-
-Ces contrôles vérifient l'existence des références, mais ne constituent pas encore une validation complète de toutes les contraintes du futur Data Warehouse.
-
-## 5. Analyse des valeurs manquantes
-
-Les principales valeurs manquantes identifiées sont :
-
-| Table | Colonne | Valeurs manquantes | Pourcentage |
+| Table | Clé contrôlée | Valeurs nulles | Doublons de la clé |
 |---|---|---:|---:|
-| order_reviews | review_comment_title | 87 656 | 88,34 % |
-| order_reviews | review_comment_message | 58 247 | 58,70 % |
-| orders | order_delivered_customer_date | 2 965 | 2,98 % |
-| orders | order_delivered_carrier_date | 1 783 | 1,79 % |
-| orders | order_approved_at | 160 | 0,16 % |
-| products | product_category_name | 610 | 1,85 % |
-| products | product_name_lenght | 610 | 1,85 % |
-| products | product_description_lenght | 610 | 1,85 % |
-| products | product_photos_qty | 610 | 1,85 % |
-| products | dimensions et poids | 2 par colonne | 0,006 % |
+| `orders` | `order_id` | 0 | 0 |
+| `customers` | `customer_id` | 0 | 0 |
+| `order_items` | (`order_id`, `order_item_id`) | 0 | 0 |
+| `products` | `product_id` | 0 | 0 |
+| `sellers` | `seller_id` | 0 | 0 |
+| `payments` | (`order_id`, `payment_sequential`) | 0 | 0 |
+| `reviews` | `review_id` seul | 0 | Non unique |
+| `reviews` | (`review_id`, `order_id`) | 0 | 0 |
 
-Les commentaires des clients sont facultatifs. Leur absence ne signifie donc pas nécessairement que les enregistrements sont invalides.
+Le premier contrôle du notebook teste `review_id` seul et obtient **814 occurrences supplémentaires après la première occurrence**. L'analyse approfondie établit ensuite que la combinaison (`review_id`, `order_id`) est unique. Cette clé composite devient donc la clé métier retenue pour les avis dans les phases suivantes.
 
-Les autres valeurs manquantes devront être traitées selon leur contexte métier pendant la phase de transformation.
+### 5.2 Intégrité référentielle
 
-## 6. Analyse des doublons
-
-### 6.1 Doublons complets
-
-Les doublons complets détectés sont principalement concentrés dans la table `geolocation`.
-
-- Nombre de doublons complets : 261 831.
-- Nombre total de lignes : 1 000 163.
-
-Ces doublons devront être étudiés avant toute suppression afin de préserver les informations géographiques utiles.
-
-### 6.2 Doublons dans les avis clients
-
-L'analyse de `order_reviews` a révélé :
-
-- 1 603 lignes concernées par des identifiants `review_id` répétés.
-- 789 identifiants `review_id` distincts répétés.
-- Aucun doublon sur la combinaison `review_id + order_id`.
-- 547 commandes possédant plusieurs avis.
-- 4 commandes possédant trois avis.
-
-La relation entre `orders` et `order_reviews` est donc de type One-to-Many (1:N).
-
-Cette relation devra être prise en compte lors des jointures et des agrégations afin d'éviter la multiplication artificielle des indicateurs commerciaux.
-
-## 7. Analyse des statuts de commandes
-
-La distribution des statuts observée est la suivante :
-
-| Statut | Nombre de commandes |
+| Relation vérifiée | Valeurs enfant sans parent |
 |---|---:|
-| delivered | 96 478 |
-| shipped | 1 107 |
-| canceled | 625 |
-| unavailable | 609 |
-| invoiced | 314 |
-| processing | 301 |
-| created | 5 |
-| approved | 2 |
+| `orders.customer_id` → `customers.customer_id` | 0 |
+| `order_items.order_id` → `orders.order_id` | 0 |
+| `order_items.product_id` → `products.product_id` | 0 |
+| `order_items.seller_id` → `sellers.seller_id` | 0 |
+| `payments.order_id` → `orders.order_id` | 0 |
+| `reviews.order_id` → `orders.order_id` | 0 |
+
+Ces contrôles comparent les ensembles d'identifiants. Ils confirment l'absence de références orphelines sur les six relations testées, mais ne remplacent pas les contraintes SQL du futur Data Warehouse.
+
+<a id="section-6"></a>
+
+## 6. Valeurs manquantes
+
+| Table | Colonne | Valeurs manquantes | Proportion |
+|---|---|---:|---:|
+| `reviews` | `review_comment_title` | 87 656 | 88,34 % |
+| `reviews` | `review_comment_message` | 58 247 | 58,70 % |
+| `orders` | `order_delivered_customer_date` | 2 965 | 2,98 % |
+| `orders` | `order_delivered_carrier_date` | 1 783 | 1,79 % |
+| `orders` | `order_approved_at` | 160 | 0,16 % |
+| `products` | Catégorie, longueur du nom, description et photos | 610 par colonne | 1,85 % |
+| `products` | Poids, longueur, hauteur et largeur | 2 par colonne | 0,006 % |
+
+Les commentaires et titres d'avis sont facultatifs : leur absence n'invalide pas un avis. Les dates de livraison manquantes, en revanche, affectent la possibilité de calculer un retard et doivent être interprétées avec le statut de commande. Les valeurs produit manquantes nécessitent des indicateurs de qualité plutôt qu'une imputation arbitraire.
+
+<a id="section-7"></a>
+
+## 7. Doublons et multiplicité des avis
+
+### 7.1 Quatre notions à ne pas confondre
+
+| Notion | Résultat | Interprétation |
+|---|---:|---|
+| Doublons complets dans `geolocation` | 261 831 | Lignes entièrement identiques parmi 1 000 163 observations |
+| Occurrences supplémentaires de `review_id` | 814 | Résultat de `duplicated(review_id).sum()` ; chaque occurrence après la première est comptée |
+| Lignes appartenant à un `review_id` répété | 1 603 | Toutes les lignes concernées, obtenues avec `keep=False` |
+| Valeurs distinctes de `review_id` répétées | 789 | Nombre d'identifiants non uniques |
+| Doublons de (`review_id`, `order_id`) | 0 | La clé composite reste unique |
+| Commandes possédant plusieurs avis | 547 | Groupes `order_id` comportant plus d'une ligne |
+| Occurrences supplémentaires de `order_id` | 551 | Quatre commandes ont trois avis, les autres groupes multiples en ont deux |
+
+Un identifiant `review_id` répété n'implique pas un doublon de ligne : dans les cas observés, il peut être associé à plusieurs commandes. Réciproquement, une commande possédant plusieurs avis représente une multiplicité métier, pas nécessairement une duplication erronée.
+
+La relation `orders` → `reviews` doit donc être traitée comme une relation **1:N**. Une jointure directe avec d'autres tables de faits peut multiplier les lignes et fausser des KPI ; les avis devront être agrégés séparément au niveau commande lorsque ce grain est requis.
+
+<a id="section-8"></a>
+
+## 8. Commandes et cohérence temporelle
+
+### 8.1 Distribution des statuts
+
+| Statut | Commandes |
+|---|---:|
+| `delivered` | 96 478 |
+| `shipped` | 1 107 |
+| `canceled` | 625 |
+| `unavailable` | 609 |
+| `invoiced` | 314 |
+| `processing` | 301 |
+| `created` | 5 |
+| `approved` | 2 |
 | **Total** | **99 441** |
 
-Le statut `delivered` représente environ 97 % des commandes.
+### 8.2 Anomalies de livraison
 
-Cette distribution permettra de définir les populations utilisées dans les analyses commerciales et dans le futur modèle de Machine Learning.
+- **8 commandes** ont le statut `delivered` sans date réelle de livraison.
+- **6 commandes** ont le statut `canceled` tout en possédant une date réelle de livraison.
+- Les autres valeurs nulles de livraison sont majoritairement cohérentes avec des statuts non livrés.
 
-## 8. Analyse de la cohérence des dates de livraison
+La Phase 1 conserve ces lignes et les signale. Elle ne remplit pas les dates manquantes et ne modifie pas les statuts.
 
-Deux situations particulières ont été identifiées.
+### 8.3 Préparation du cas d'usage Machine Learning
 
-### 8.1 Commandes livrées sans date réelle de livraison
+La cible envisagée pour la prédiction des retards est :
 
-Huit commandes possèdent le statut `delivered`, mais leur colonne `order_delivered_customer_date` est vide.
+- `1` lorsque la date réelle de livraison est postérieure à la date estimée ;
+- `0` lorsqu'elle est antérieure ou égale.
 
-Ces commandes seront conservées dans les données sources, mais exclues de la construction initiale de la variable cible du modèle prédictif.
+La population initiale doit se limiter aux commandes livrées avec une date réelle renseignée. Les informations indisponibles au moment de la prédiction, telles que les avis ou la date réelle de livraison, ne peuvent pas servir de variables explicatives : leur utilisation créerait une fuite de données.
 
-### 8.2 Commandes annulées avec une date réelle de livraison
+<a id="section-9"></a>
 
-Six commandes possèdent le statut `canceled` tout en ayant une date de livraison effective.
+## 9. Synthèse des anomalies et décisions
 
-Ces cas seront conservés et signalés comme anomalies métier. Ils ne seront pas utilisés dans le jeu d'entraînement initial.
+| Constat | Volume | Décision de Phase 1 | Traitement prévu |
+|---|---:|---|---|
+| `review_id` non unique | 789 identifiants, 1 603 lignes | Ne pas supprimer | Retenir (`review_id`, `order_id`) comme clé composite |
+| Commandes multi-avis | 547 commandes, maximum 3 avis | Conserver la multiplicité | Agréger par commande pour les usages au grain commande |
+| Doublons complets de géolocalisation | 261 831 | Ne pas supprimer sans analyse | Construire une représentation par préfixe postal en Phase 2 |
+| Commandes livrées sans date réelle | 8 | Conserver et signaler | Ajouter un indicateur de qualité ; exclure des calculs de retard impossibles |
+| Commandes annulées avec date réelle | 6 | Conserver et signaler | Ajouter un indicateur métier dédié |
+| Catégories produit manquantes | 610 | Ne pas imputer arbitrairement | Utiliser une catégorie technique et conserver un indicateur |
+| Commentaires d'avis manquants | 58 247 messages | Considérer le champ comme facultatif | Distinguer absence de commentaire et avis invalide |
 
-## 9. Premières décisions pour le Machine Learning
+<a id="section-10"></a>
 
-L'objectif du futur modèle est de prédire si une commande risque d'être livrée en retard.
+## 10. Validations et limites
 
-La variable cible envisagée est :
+### 10.1 Validations réalisées
 
-- `1` : livraison réelle après la date de livraison estimée.
-- `0` : livraison réelle à la date estimée ou avant.
+- Chargement et dimension des neuf fichiers.
+- Contrôle des clés simples et composites.
+- Recherche de valeurs nulles dans les clés.
+- Vérification de six relations par comparaison d'identifiants.
+- Analyse des valeurs manquantes par colonne.
+- Analyse des doublons complets et de clés.
+- Distribution des statuts de commande.
+- Analyse détaillée des avis multiples.
+- Contrôle des incohérences entre statut et date de livraison.
 
-La population initiale sera limitée aux commandes ayant le statut `delivered` et une date réelle de livraison renseignée.
+Les sorties sont enregistrées dans le notebook. Il s'agit de contrôles exploratoires reproductibles, pas encore d'une suite de tests automatisée ni de contraintes de base de données.
 
-Une attention particulière sera portée au **Data Leakage** : les informations qui ne sont pas disponibles au moment de la prédiction ne devront pas être utilisées comme variables explicatives.
+### 10.2 Limites
 
-Le moment exact de prédiction et les variables autorisées seront définis avant la construction du dataset Machine Learning.
+- Les résultats correspondent à la version actuelle du dataset Olist.
+- Les contrôles d'intégrité couvrent les principales relations, pas toutes les règles métier possibles.
+- Les frontières géographiques et valeurs extrêmes ne sont pas encore auditées en détail.
+- Les anomalies sont identifiées, mais aucune correction destructive n'est réalisée.
+- Le moment exact de la future prédiction et les variables autorisées restent à formaliser avant le Machine Learning.
 
-## 10. Synthèse et conclusion
+<a id="section-11"></a>
 
-La première phase a permis de comprendre la structure du dataset Olist, d'identifier les principales relations entre les tables et de détecter plusieurs anomalies liées aux valeurs manquantes, aux doublons et à la cohérence des données.
+## 11. Livrables
 
-Les contrôles effectués constituent une première base de connaissance pour la conception du processus ETL.
+| Livrable | Emplacement |
+|---|---|
+| Notebook d'exploration | [`notebooks/01_olist_data_exploration.ipynb`](../notebooks/01_olist_data_exploration.ipynb) |
+| Inspection générale des CSV | [`src/inspect_dataset.py`](../src/inspect_dataset.py) |
+| Configuration des chemins et fichiers attendus | [`config/paths.py`](../config/paths.py) |
+| Rapport de Phase 1 | [`docs/PHASE_1_DATA_EXPLORATION.md`](PHASE_1_DATA_EXPLORATION.md) |
 
-**Les données brutes seront conservées sans modification.** Les opérations de nettoyage et de transformation seront réalisées dans une couche dédiée afin de garantir la traçabilité et la reproductibilité du traitement.
+<a id="section-12"></a>
 
-### Résultats de la phase 1
+## 12. Conclusion et transition
 
-- Exploration des neuf fichiers CSV.
-- Analyse des dimensions et des types de données.
-- Identification des clés candidates.
-- Vérification des principales relations entre les tables.
-- Analyse des valeurs manquantes.
-- Détection des doublons et anomalies.
-- Analyse des statuts et des dates de livraison.
-- Définition des premières règles métier pour le futur modèle prédictif.
+La Phase 1 établit une connaissance fiable du dataset : volumes, granularités, clés, relations, valeurs manquantes et anomalies. Elle montre surtout qu'une suppression naïve de doublons ou une jointure directe entre faits pourrait dégrader l'information.
 
-**Statut : Phase 1 — Exploration et compréhension des données terminée.**
+Les décisions prises — conservation des sources, clé composite des avis, signalement des anomalies et prévention des fuites de données — servent de contrat d'entrée à la **Phase 2 — ETL & Data Processing**, qui implémente les transformations sans effacer la traçabilité des données.
+
+**Statut final : Phase 1 terminée.**
