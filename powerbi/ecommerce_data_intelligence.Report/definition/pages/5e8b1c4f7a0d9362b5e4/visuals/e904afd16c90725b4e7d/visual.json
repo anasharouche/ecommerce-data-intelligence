@@ -1,34 +1,212 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "e904afd16c90725b4e7d",
-  "position": { "x": 40, "y": 680, "z": 8, "height": 360, "width": 590, "tabOrder": 8 },
+  "position": {
+    "x": 40,
+    "y": 680,
+    "z": 8,
+    "height": 360,
+    "width": 590,
+    "tabOrder": 8
+  },
   "visual": {
     "visualType": "barChart",
     "query": {
       "queryState": {
-        "Category": { "projections": [{ "field": { "Column": { "Expression": { "SourceRef": { "Entity": "analytics vw_category_sales" } }, "Property": "category_name" } }, "queryRef": "analytics vw_category_sales.category_name", "nativeQueryRef": "category_name", "active": true }] },
-        "Y": { "projections": [{ "field": { "Aggregation": { "Expression": { "Column": { "Expression": { "SourceRef": { "Entity": "analytics vw_category_sales" } }, "Property": "total_sales" } }, "Function": 0 } }, "queryRef": "Sum(analytics vw_category_sales.total_sales)", "nativeQueryRef": "Sum of total_sales" }] }
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "analytics vw_category_sales"
+                    }
+                  },
+                  "Property": "category_name"
+                }
+              },
+              "queryRef": "analytics vw_category_sales.category_name",
+              "nativeQueryRef": "category_name",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "analytics vw_category_sales"
+                        }
+                      },
+                      "Property": "total_sales"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(analytics vw_category_sales.total_sales)",
+              "nativeQueryRef": "Sum of total_sales"
+            }
+          ]
+        }
       },
-      "sortDefinition": { "sort": [{ "field": { "Aggregation": { "Expression": { "Column": { "Expression": { "SourceRef": { "Entity": "analytics vw_category_sales" } }, "Property": "total_sales" } }, "Function": 0 } }, "direction": "Descending" }], "isDefaultSort": false }
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "analytics vw_category_sales"
+                      }
+                    },
+                    "Property": "total_sales"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
     },
     "visualContainerObjects": {
-      "title": [{
-        "properties": {
-          "show": { "expr": { "Literal": { "Value": "true" } } },
-          "text": { "expr": { "Literal": { "Value": "'Top 10 Product Categories by Sales'" } } }
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top 10 Product Categories by Sales'"
+                }
+              }
+            }
+          }
         }
-      }]
+      ]
     },
     "drillFilterOtherVisuals": true
   },
-  "filterConfig": { "filters": [{
-    "name": "Filter1c4f7a0d9362b5e8c1f4a7d0",
-    "field": { "Column": { "Expression": { "SourceRef": { "Entity": "analytics vw_category_sales" } }, "Property": "category_name" } },
-    "type": "TopN",
-    "filter": { "Version": 2, "From": [
-      { "Name": "subquery", "Expression": { "Subquery": { "Query": { "Version": 2, "From": [{ "Name": "c", "Entity": "analytics vw_category_sales", "Type": 0 }], "Select": [{ "Column": { "Expression": { "SourceRef": { "Source": "c" } }, "Property": "category_name" }, "Name": "field" }], "OrderBy": [{ "Direction": 2, "Expression": { "Aggregation": { "Expression": { "Column": { "Expression": { "SourceRef": { "Source": "c" } }, "Property": "total_sales" } }, "Function": 0 } } }], "Top": 10 } } }, "Type": 2 },
-      { "Name": "c", "Entity": "analytics vw_category_sales", "Type": 0 }
-    ], "Where": [{ "Condition": { "In": { "Expressions": [{ "Column": { "Expression": { "SourceRef": { "Source": "c" } }, "Property": "category_name" } }], "Table": { "SourceRef": { "Source": "subquery" } } } } }] },
-    "howCreated": "User"
-  }] }
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "Filter1c4f7a0d9362b5e8c1f4a7d0",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "analytics vw_category_sales"
+              }
+            },
+            "Property": "category_name"
+          }
+        },
+        "type": "TopN",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "subquery",
+              "Expression": {
+                "Subquery": {
+                  "Query": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "c",
+                        "Entity": "analytics vw_category_sales",
+                        "Type": 0
+                      }
+                    ],
+                    "Select": [
+                      {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "c"
+                            }
+                          },
+                          "Property": "category_name"
+                        },
+                        "Name": "field"
+                      }
+                    ],
+                    "OrderBy": [
+                      {
+                        "Direction": 2,
+                        "Expression": {
+                          "Aggregation": {
+                            "Expression": {
+                              "Column": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Source": "c"
+                                  }
+                                },
+                                "Property": "total_sales"
+                              }
+                            },
+                            "Function": 0
+                          }
+                        }
+                      }
+                    ],
+                    "Top": 10
+                  }
+                }
+              },
+              "Type": 2
+            },
+            {
+              "Name": "c",
+              "Entity": "analytics vw_category_sales",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "c"
+                          }
+                        },
+                        "Property": "category_name"
+                      }
+                    }
+                  ],
+                  "Table": {
+                    "SourceRef": {
+                      "Source": "subquery"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ]
+  }
 }

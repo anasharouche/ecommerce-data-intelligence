@@ -1,24 +1,154 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "d8f39ec05b8f714a3d6c",
-  "position": { "x": 960, "y": 330, "z": 7, "height": 330, "width": 900, "tabOrder": 7 },
+  "position": {
+    "x": 960,
+    "y": 330,
+    "z": 7,
+    "height": 330,
+    "width": 900,
+    "tabOrder": 7
+  },
   "visual": {
     "visualType": "columnChart",
     "query": {
       "queryState": {
-        "Category": { "projections": [{ "field": { "Column": { "Expression": { "SourceRef": { "Entity": "analytics vw_monthly_sales" } }, "Property": "sales_month" } }, "queryRef": "analytics vw_monthly_sales.sales_month", "nativeQueryRef": "sales_month", "active": true }] },
-        "Y": { "projections": [{ "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "_Measures" } }, "Property": "Total Orders" } }, "queryRef": "_Measures.Total Orders", "nativeQueryRef": "Total Orders" }] }
-      },
-      "sortDefinition": { "sort": [{ "field": { "Column": { "Expression": { "SourceRef": { "Entity": "analytics vw_monthly_sales" } }, "Property": "sales_month" } }, "direction": "Ascending" }] }
-    },
-    "objects": { "categoryAxis": [{ "properties": { "show": { "expr": { "Literal": { "Value": "true" } } }, "axisType": { "expr": { "Literal": { "Value": "'Continuous'" } } } } }], "valueAxis": [{ "properties": { "show": { "expr": { "Literal": { "Value": "true" } } }, "start": { "expr": { "Literal": { "Value": "0D" } } } } }], "dataPoint": [{ "properties": { "fill": { "solid": { "color": { "expr": { "Literal": { "Value": "'#12239E'" } } } } } } }] },
-    "visualContainerObjects": {
-      "title": [{
-        "properties": {
-          "show": { "expr": { "Literal": { "Value": "true" } } },
-          "text": { "expr": { "Literal": { "Value": "'Monthly Orders'" } } }
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "analytics vw_monthly_sales"
+                    }
+                  },
+                  "Property": "sales_month"
+                }
+              },
+              "queryRef": "analytics vw_monthly_sales.sales_month",
+              "nativeQueryRef": "sales_month",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Orders"
+                }
+              },
+              "queryRef": "_Measures.Total Orders",
+              "nativeQueryRef": "Total Orders"
+            }
+          ]
         }
-      }]
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "analytics vw_monthly_sales"
+                  }
+                },
+                "Property": "sales_month"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "categoryAxis": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "axisType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Continuous'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "start": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#12239E'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Monthly Orders'"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   }

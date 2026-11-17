@@ -1,2 +1,189 @@
 cultureInfo fr-FR
 
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "analytics_vw_seller_performance.seller_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "analytics vw_seller_performance",
+			          "ConceptualProperty": "seller_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Seller ID": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "analytics_vw_seller_performance.seller_state": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "analytics vw_seller_performance",
+			          "ConceptualProperty": "seller_state"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "State": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Seller State": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "analytics_vw_seller_performance.seller_city": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "analytics vw_seller_performance",
+			          "ConceptualProperty": "seller_city"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "City": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "analytics_vw_seller_performance.total_orders": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "analytics vw_seller_performance",
+			          "ConceptualProperty": "total_orders"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total Orders": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "analytics_vw_seller_performance.items_sold": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "analytics vw_seller_performance",
+			          "ConceptualProperty": "items_sold"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Items Sold": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "analytics_vw_seller_performance.total_sales": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "analytics vw_seller_performance",
+			          "ConceptualProperty": "total_sales"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total Sales": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "analytics_vw_seller_performance.evaluated_orders": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "analytics vw_seller_performance",
+			          "ConceptualProperty": "evaluated_orders"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Evaluated Orders": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "analytics_vw_seller_performance.delayed_orders": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "analytics vw_seller_performance",
+			          "ConceptualProperty": "delayed_orders"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Delayed Orders": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

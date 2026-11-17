@@ -1,12 +1,52 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "618c2d5f8a1e0473c6f5",
-  "position": { "x": 40, "y": 24, "z": 0, "height": 92, "width": 1100, "tabOrder": 0 },
+  "position": {
+    "x": 40,
+    "y": 24,
+    "z": 0,
+    "height": 92,
+    "width": 1100,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "textbox",
-    "objects": { "general": [{ "properties": { "paragraphs": [
-      { "textRuns": [{ "value": "Sales & Product Analytics", "textStyle": { "fontFamily": "Segoe UI Semibold", "fontSize": "28px", "fontWeight": "bold", "color": "#0F2942" } }], "horizontalTextAlignment": "left" },
-      { "textRuns": [{ "value": "Revenue momentum, order demand and product category performance", "textStyle": { "fontFamily": "Segoe UI", "fontSize": "15px", "color": "#5B6B7A" } }], "horizontalTextAlignment": "left" }
-    ] } }] }
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Sales & Product Analytics",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "28px",
+                      "fontWeight": "bold",
+                      "color": "#0F2942"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Revenue momentum, order demand and product category performance",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "15px",
+                      "color": "#5B6B7A"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              }
+            ]
+          }
+        }
+      ]
+    }
   }
 }

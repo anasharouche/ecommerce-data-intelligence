@@ -11,18 +11,23 @@ table _Measures
 
 	measure 'Total Orders' = SUM('analytics vw_monthly_sales'[total_orders])
 		formatString: #,##0
+		lineageTag: fb1fe64f-845c-40dc-891c-c7640cfac7d8
 
 	measure 'Average Order Value' = DIVIDE([Total Sales], SUM('analytics vw_monthly_sales'[orders_with_items]))
 		formatString: R$ #,##0.00
+		lineageTag: dd816c28-1b18-436f-a12f-03719ee4ef42
 
 	measure 'Delay Rate' = DIVIDE(SUM('analytics vw_delivery_performance'[delayed_orders]), SUM('analytics vw_delivery_performance'[evaluated_orders]))
 		formatString: 0.00%
+		lineageTag: 812a48c6-b21b-4807-831f-40f0add941f7
 
 	measure 'On-Time Delivery Rate' = DIVIDE(SUM('analytics vw_delivery_performance'[on_time_orders]), SUM('analytics vw_delivery_performance'[evaluated_orders]))
 		formatString: 0.00%
+		lineageTag: a82ac193-6878-431f-93db-ee025ed5020e
 
 	measure 'Customer Satisfaction Rate' = DIVIDE(SUM('analytics vw_customer_satisfaction'[positive_reviews]), SUM('analytics vw_customer_satisfaction'[total_reviews]))
 		formatString: 0.00%
+		lineageTag: 2a7269e7-7279-4716-81f8-a737f6717930
 
 	column Placeholder
 		dataType: int64
