@@ -51,7 +51,8 @@
                 }
               },
               "queryRef": "Sum(analytics vw_category_sales.total_sales)",
-              "nativeQueryRef": "Sum of total_sales"
+              "nativeQueryRef": "Sum of total_sales",
+              "format": "R$ #,##0.00"
             }
           ]
         }
@@ -78,6 +79,34 @@
           }
         ]
       }
+    },
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "visualContainerObjects": {
       "title": [

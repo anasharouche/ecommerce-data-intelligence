@@ -34,7 +34,7 @@
               "queryRef": "DistinctCount(analytics vw_seller_performance.seller_id)",
               "nativeQueryRef": "Distinct count of seller_id",
               "displayName": "Active Sellers",
-              "format": "#,0"
+              "format": "#,##0"
             }
           ]
         }
@@ -44,6 +44,13 @@
       "value": [
         {
           "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
             "fontSize": {
               "expr": {
                 "Literal": {
@@ -163,5 +170,28 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "540988750a01e97e7b2b",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "analytics vw_seller_performance"
+                  }
+                },
+                "Property": "seller_id"
+              }
+            },
+            "Function": 2
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

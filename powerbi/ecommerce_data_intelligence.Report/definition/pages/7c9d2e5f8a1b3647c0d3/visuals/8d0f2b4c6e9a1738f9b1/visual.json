@@ -54,7 +54,7 @@
               "queryRef": "Sum(analytics vw_seller_performance.total_orders)",
               "nativeQueryRef": "Sum of total_orders",
               "displayName": "Total Orders",
-              "format": "#,0"
+              "format": "#,##0"
             }
           ]
         }
@@ -109,6 +109,13 @@
                   "Value": "true"
                 }
               }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
             }
           }
         }
@@ -120,6 +127,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
                 }
               }
             },

@@ -49,7 +49,7 @@
               "queryRef": "Sum(analytics vw_seller_performance.delayed_orders)",
               "nativeQueryRef": "Delayed Orders",
               "displayName": "Delayed Orders",
-              "format": "#,0"
+              "format": "#,##0"
             },
             {
               "field": {
@@ -70,7 +70,7 @@
               "queryRef": "Sum(analytics vw_seller_performance.evaluated_orders)",
               "nativeQueryRef": "Evaluated Orders",
               "displayName": "Evaluated Orders",
-              "format": "#,0"
+              "format": "#,##0"
             },
             {
               "field": {

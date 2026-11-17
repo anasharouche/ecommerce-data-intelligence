@@ -34,7 +34,7 @@
               "queryRef": "Sum(analytics vw_seller_performance.total_sales)",
               "nativeQueryRef": "Sum of total_sales",
               "displayName": "Seller Sales",
-              "format": "R$ #,0.00"
+              "format": "R$ #,##0.00"
             }
           ]
         }
@@ -44,6 +44,13 @@
       "value": [
         {
           "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
             "fontSize": {
               "expr": {
                 "Literal": {

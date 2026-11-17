@@ -74,7 +74,7 @@
               "queryRef": "analytics vw_seller_performance.total_orders",
               "nativeQueryRef": "total_orders",
               "displayName": "Total Orders",
-              "format": "#,0"
+              "format": "#,##0"
             },
             {
               "field": {
@@ -90,7 +90,7 @@
               "queryRef": "analytics vw_seller_performance.items_sold",
               "nativeQueryRef": "items_sold",
               "displayName": "Items Sold",
-              "format": "#,0"
+              "format": "#,##0"
             },
             {
               "field": {
@@ -106,7 +106,7 @@
               "queryRef": "analytics vw_seller_performance.total_sales",
               "nativeQueryRef": "total_sales",
               "displayName": "Total Sales",
-              "format": "R$ #,0.00"
+              "format": "R$ #,##0.00"
             },
             {
               "field": {
@@ -122,7 +122,7 @@
               "queryRef": "analytics vw_seller_performance.evaluated_orders",
               "nativeQueryRef": "evaluated_orders",
               "displayName": "Evaluated Orders",
-              "format": "#,0"
+              "format": "#,##0"
             },
             {
               "field": {
@@ -138,7 +138,7 @@
               "queryRef": "analytics vw_seller_performance.delayed_orders",
               "nativeQueryRef": "delayed_orders",
               "displayName": "Delayed Orders",
-              "format": "#,0"
+              "format": "#,##0"
             }
           ]
         }

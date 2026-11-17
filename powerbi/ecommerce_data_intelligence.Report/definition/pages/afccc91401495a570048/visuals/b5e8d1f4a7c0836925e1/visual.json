@@ -51,7 +51,8 @@
                 }
               },
               "queryRef": "Sum(analytics vw_category_sales.total_sales)",
-              "nativeQueryRef": "Sum of total_sales"
+              "nativeQueryRef": "Sum of total_sales",
+              "format": "R$ #,##0.00"
             }
           ]
         }
@@ -127,7 +128,7 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "1000000D"
+                  "Value": "1D"
                 }
               }
             },
