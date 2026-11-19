@@ -2,9 +2,9 @@
 
 > End-to-End Data Engineering, Analytics, Business Intelligence & Machine Learning.
 
-This portfolio project turns the public Brazilian Olist e-commerce dataset into a documented analytics platform: raw CSV files are profiled, transformed into typed Parquet datasets, loaded into a PostgreSQL dimensional warehouse, exposed through validated SQL views, and consumed by four interactive Power BI dashboards.
+This portfolio project turns the public Brazilian Olist e-commerce dataset into a documented data intelligence platform: raw CSV files are profiled, transformed into typed Parquet datasets, loaded into a PostgreSQL dimensional warehouse, exposed through validated SQL views and Power BI dashboards, and used in an experimental delivery-delay modeling study.
 
-Phases 1 through 4 are complete. Machine Learning is the planned next phase and has **not** been implemented yet.
+Phases 1 through 5 are complete. The Machine Learning work is experimentally complete, but its final candidate did not demonstrate sufficient generalization and is **not ready for production**. FastAPI, React, orchestration, and production monitoring remain planned work.
 
 ## Table of Contents
 
@@ -18,27 +18,29 @@ Phases 1 through 4 are complete. Machine Learning is the planned next phase and 
 8. [Phase 2 — ETL Pipeline](#phase-2--etl-pipeline)
 9. [Phase 3 — PostgreSQL Data Warehouse](#phase-3--postgresql-data-warehouse)
 10. [Phase 4 — SQL Analytics & Power BI](#phase-4--sql-analytics--power-bi)
-11. [Key Business Metrics](#key-business-metrics)
-12. [Repository Structure](#repository-structure)
-13. [Getting Started](#getting-started)
-14. [Testing & Validation](#testing--validation)
-15. [Current Status & Roadmap](#current-status--roadmap)
-16. [Project Documentation](#project-documentation)
-17. [Maintaining This README](#maintaining-this-readme)
-18. [Conclusion](#conclusion)
+11. [Phase 5 — Machine Learning](#phase-5--machine-learning)
+12. [Key Business Metrics](#key-business-metrics)
+13. [Repository Structure](#repository-structure)
+14. [Getting Started](#getting-started)
+15. [Testing & Validation](#testing--validation)
+16. [Current Status & Roadmap](#current-status--roadmap)
+17. [Project Documentation](#project-documentation)
+18. [Maintaining This README](#maintaining-this-readme)
+19. [Conclusion](#conclusion)
 
 ## Project Overview
 
 Olist operated an online marketplace connecting customers and sellers across Brazil. Its public dataset describes orders, products, sellers, customers, payments, reviews, delivery events, and geolocation data.
 
-This project uses those operational records to build a traceable decision-support workflow. It addresses four questions:
+This project uses those operational records to build a traceable decision-support workflow. It addresses five questions:
 
 - How reliable are the source data, identifiers, timestamps, and relationships?
 - How can the raw files be transformed without losing valid business events?
 - How should multiple business grains be modeled and reconciled in PostgreSQL?
 - How can commercial, seller, delivery, and customer-experience indicators be presented accurately in Power BI?
+- Can delivery delays be ranked from information available at order creation, under strict temporal validation?
 
-The next planned phase will explore delivery-delay prediction. No trained model, inference service, or ML evaluation result is currently included.
+The repository includes the code, tests, contracts, and documentation for the experimental ML study. Generated datasets and model artifacts remain local and are excluded from Git. No inference service or operational alerting system has been implemented.
 
 ## Project Objectives
 
@@ -49,7 +51,9 @@ The next planned phase will explore delivery-delay prediction. No trained model,
 - Publish analytics-ready SQL views with explicit business rules and grains.
 - Centralize reusable DAX measures in a version-controlled Power BI semantic model.
 - Deliver interactive dashboards for executive, sales, seller, delivery, and satisfaction analysis.
-- Prepare a reliable foundation for a future delivery-delay prediction use case.
+- Build leakage-aware ML datasets and feature contracts for delivery-delay prediction.
+- Evaluate an experimental candidate with temporal backtesting and one locked final holdout.
+- Document negative generalization and production-readiness decisions as first-class outcomes.
 
 ## End-to-End Architecture
 
@@ -62,10 +66,15 @@ flowchart LR
     E --> F["Seven analytics views<br/>analytics"]
     F --> G["Power BI semantic model<br/>TMDL"]
     G --> H["Four dashboards<br/>PBIR"]
-    E -. "Phase 5 — planned" .-> I["Delivery-delay prediction<br/>not implemented"]
+    E --> I["Versioned ML datasets<br/>feature contracts"]
+    I --> J["Temporal training and backtesting<br/>scikit-learn"]
+    J --> K["Frozen experimental results<br/>not production-ready"]
+    E -. "planned" .-> L["FastAPI analytics<br/>and experimental ML API"]
+    L -. "planned" .-> M["React dashboards"]
+    B -. "planned" .-> N["Airflow orchestration<br/>and monitoring"]
 
     classDef planned fill:#f5f5f5,stroke:#777,stroke-dasharray:5 5;
-    class I planned;
+    class L,M,N planned;
 ```
 
 The layers deliberately remain separate. Staging preserves the ETL outputs, the `dw` schema stores atomic dimensional facts, and the `analytics` schema exposes purpose-built aggregates for Business Intelligence. The analytics views have different grains and are not connected through unproven relationships in Power BI.
@@ -79,9 +88,10 @@ The layers deliberately remain separate. Staging preserves the ETL outputs, the 
 | Database loading | Psycopg 3, python-dotenv, PostgreSQL `COPY` |
 | Data warehouse and analytics | PostgreSQL, SQL |
 | Business Intelligence | Power BI Desktop, DAX, PBIP, PBIR, TMDL |
+| Machine Learning | scikit-learn, SciPy, joblib, temporal backtesting |
 | Version control | Git, GitHub |
 
-The repository does not currently implement Docker, Airflow, a CI/CD pipeline, an API, or a Machine Learning framework.
+The repository does not currently implement Docker, Airflow, a CI/CD pipeline, FastAPI, React, or a production inference service.
 
 ## Dataset
 
@@ -99,6 +109,8 @@ The nine source CSV files contain **1,560,862 rows** in total and cover:
 
 The 99,441 orders were purchased between **2016-09-04** and **2018-10-17**. The broader warehouse date dimension extends beyond that purchase window because it also covers relevant delivery, shipping, and review events.
 
+For the supervised delivery-delay study, **96,470 orders** are eligible (**approximately 97.01%** of the 99,441 historical orders). This population contains **6,534 delayed orders** and 89,936 on-time deliveries. The remaining 2,971 orders have no admissible observed target and are not converted into negative examples.
+
 Important source-data characteristics include missing delivery timestamps, sparse review text, repeated review identifiers, multiple reviews for some orders, duplicated geolocation rows, and a small number of unusable coordinates. The project preserves legitimate event multiplicity instead of applying indiscriminate deduplication.
 
 ## Project Phases
@@ -109,7 +121,10 @@ Important source-data characteristics include missing delivery timestamps, spars
 | Phase 2 | ETL & Data Processing | Completed | [Technical report](docs/PHASE_2_DATA_CLEANING_ETL.md) |
 | Phase 3 | PostgreSQL Data Warehouse | Completed | [Technical report](docs/PHASE_3_DATA_WAREHOUSE.md) |
 | Phase 4 | SQL Analytics & Business Intelligence | Completed | [Technical report](docs/PHASE_4_SQL_ANALYTICS_BI.md) |
-| Phase 5 | Machine Learning — Delivery Delay Prediction | Planned | — |
+| Phase 5 | Machine Learning — Delivery Delay Prediction | Completed — Experimental | [Consolidated report](docs/PHASE_5_MACHINE_LEARNING.md) |
+| Phase 6 | FastAPI Analytics & Experimental ML API | Planned | — |
+| Phase 7 | React Dashboard | Planned | — |
+| Phase 8 | Orchestration & Monitoring | Planned | — |
 
 ## Phase 1 — Data Exploration
 
@@ -244,6 +259,34 @@ All four 1920 × 1080 dashboards are complete and were functionally validated in
 
 The Power BI files are available under [`powerbi/`](powerbi/), with [`ecommerce_data_intelligence.pbip`](powerbi/ecommerce_data_intelligence.pbip) as the entry point.
 
+## Phase 5 — Machine Learning
+
+Phase 5 evaluates whether delivery delays can be ranked from information available at order creation without leaking future delivery outcomes. It implements:
+
+- a supervised dataset with one row per eligible order;
+- versioned feature contracts: nine strict V1 features and 19 conditional V2 enrichments;
+- chronological splits with explicit label-maturity rules;
+- scikit-learn preprocessing and model pipelines;
+- temporal backtesting, calibration audits, drift diagnostics, and bounded Top-k policies;
+- one final evaluation under a frozen protocol and irreversible holdout stop rule.
+
+The frozen experimental candidate is `strict_v1_logistic_top10_v1`: a balanced `LogisticRegression` using contract `strict_v1.0.0`, nine features, uncalibrated scores, and a retrospective Top 10% monthly batch policy.
+
+### Final experimental evaluation
+
+| Metric | Result |
+|---|---:|
+| Holdout orders | 25,352 |
+| Average Precision | 0.052363 |
+| ROC-AUC | 0.561720 |
+| Precision@10% | 6.5037% |
+| Recall@10% | 14.7982% |
+| Lift@10% | 1.4788 |
+
+The experimental procedure is technically valid, but generalization is insufficient and temporally unstable. August 2018 produced a lift below 1. The scores are not calibrated probabilities, the monthly Top 10% policy is not a real-time rule, and the candidate is not ready for production. The final May–August 2018 holdout is permanently locked and cannot be reused for tuning or reevaluation.
+
+See the [consolidated Phase 5 report](docs/PHASE_5_MACHINE_LEARNING.md) and the [documentation audit](docs/PHASE_5_DOCUMENTATION_AUDIT.md).
+
 ## Key Business Metrics
 
 | Metric | Validated value | Definition |
@@ -266,8 +309,9 @@ Payment value is tracked separately from Total Sales. The project preserves this
 ├── data/
 │   ├── raw/                        # Local Olist CSV files; ignored by Git
 │   ├── interim/                    # Generated Parquet datasets; ignored by Git
-│   └── processed/                  # Reserved local processed data; ignored by Git
-├── docs/                           # Technical reports for Phases 1–4
+│   └── processed/                  # Generated analytical and ML data; ignored by Git
+├── models/                         # Local ML artifacts and manifests; ignored by Git
+├── docs/                           # Technical reports for Phases 1–5
 ├── notebooks/                      # Data exploration notebook
 ├── powerbi/
 │   ├── ecommerce_data_intelligence.pbip
@@ -281,8 +325,10 @@ Payment value is tracked separately from Total Sales. The project preserves this
 │   └── 01_create_schemas.sql
 ├── src/
 │   ├── etl/                        # Extract, transform, pipeline, and load modules
+│   ├── ml/                         # ML contracts, training, backtesting, and evaluation
 │   └── audit_*.py                  # Focused data-quality audits
-├── tests/                          # Executable ETL validation modules
+├── tests/
+│   └── ml/                         # Synthetic and protocol-focused ML tests
 ├── .env.example                    # Database-variable template without credentials
 ├── .gitignore
 ├── requirements.txt
@@ -425,6 +471,12 @@ Static checks confirmed four report pages, 48 unique visual identifiers, valid J
 
 The four dashboards were also opened and functionally validated by the project user in Power BI Desktop. This desktop validation is manual and is not part of CI/CD.
 
+### Machine Learning
+
+The `tests/ml/` suite covers feature contracts, target construction, temporal splits, leakage guards, preprocessing, calibration monotonicity, Top-k budgets, manifest integrity, protocol immutability, and final-evaluation stop rules. The Phase 5 reports record 47 successful ML tests at final evaluation time.
+
+The generated Parquet datasets and frozen model artifacts are intentionally excluded from Git. A clean clone therefore contains the implementation and synthetic tests but not every local artifact required by the full historical reproduction. Reproduction must follow the documented phase protocols and must never reopen the final holdout.
+
 ## Current Status & Roadmap
 
 | Phase | Status | Main outcome |
@@ -433,9 +485,12 @@ The four dashboards were also opened and functionally validated by the project u
 | Phase 2 — ETL & Data Processing | Completed | Ten validated Parquet datasets |
 | Phase 3 — PostgreSQL Data Warehouse | Completed | Controlled staging and a four-fact dimensional constellation |
 | Phase 4 — SQL Analytics & Business Intelligence | Completed | Seven analytics views, six DAX measures, and four validated dashboards |
-| Phase 5 — Delivery Delay Prediction | Planned | Leakage-aware feature engineering, model training, and evaluation |
+| Phase 5 — Delivery Delay Prediction | Completed — Experimental | Leakage-aware datasets, temporal backtesting, and a locked final evaluation |
+| Phase 6 — FastAPI Analytics & Experimental ML API | Planned | Analytics endpoints and explicitly experimental ML metadata |
+| Phase 7 — React Dashboard | Planned | Web-based analytical experience |
+| Phase 8 — Orchestration & Monitoring | Planned | Data orchestration, quality controls, and drift monitoring |
 
-Phase 5 is a roadmap item only. Its datasets, features, algorithms, evaluation metrics, and deployment approach have not yet been implemented.
+Phase 5 is complete as an experiment, not as a production ML system. Its final decisions are: **Experimental Evaluation — GO**, **Generalization — NO-GO**, and **Production Readiness — NO-GO**. Phase 6 must preserve those distinctions and may not present the frozen candidate as a validated operational model.
 
 ## Project Documentation
 
@@ -443,6 +498,8 @@ Phase 5 is a roadmap item only. Its datasets, features, algorithms, evaluation m
 - [Phase 2 — ETL & Data Processing](docs/PHASE_2_DATA_CLEANING_ETL.md)
 - [Phase 3 — PostgreSQL Data Warehouse](docs/PHASE_3_DATA_WAREHOUSE.md)
 - [Phase 4 — SQL Analytics & Business Intelligence](docs/PHASE_4_SQL_ANALYTICS_BI.md)
+- [Phase 5 — Machine Learning](docs/PHASE_5_MACHINE_LEARNING.md)
+- [Phase 5 — Documentation Audit](docs/PHASE_5_DOCUMENTATION_AUDIT.md)
 
 ## Maintaining This README
 
@@ -459,4 +516,4 @@ This document is organized by independently maintainable project phases. After e
 
 This project demonstrates an end-to-end path from raw operational data to governed analytical products. It combines source-data investigation, maintainable Python transformations, Parquet persistence, transactional PostgreSQL loading, dimensional modeling, SQL reconciliation, semantic-model design, DAX, and interactive Power BI reporting.
 
-Its central design principle is traceability: each KPI can be followed from a dashboard measure through an analytics view and warehouse fact back to documented source-data and ETL rules. That foundation is ready to support the planned Machine Learning phase without presenting future work as an existing capability.
+Its central design principle is traceability: each KPI can be followed from a dashboard measure through an analytics view and warehouse fact back to documented source-data and ETL rules, while each ML result can be traced through a versioned contract, temporal protocol, artifact manifest, and explicit decision. The next phases may expose analytics and historical experimental results, but they must not convert the Phase 5 candidate into an unvalidated production service.

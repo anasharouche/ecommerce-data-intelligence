@@ -2,6 +2,9 @@
 __pycache__/
 *.py[cod]
 *.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
 # Virtual environment
 .venv/
@@ -21,9 +24,15 @@ env/
 data/raw/
 data/interim/
 data/processed/
+*.parquet
 
 # Logs
 *.log
+
+# Machine Learning model artifacts
+models/
+*.joblib
+*.pkl
 
 # IDE
 .vscode/
